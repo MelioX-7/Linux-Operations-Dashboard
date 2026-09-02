@@ -1,0 +1,17 @@
+# Runtime logs
+logs/*
+
+# Generated backups
+backups/*
+
+# Generated reports
+reports/*
+
+# Temporary files
+*.tmp
+*.swp
+*.log
+
+# OS/editor files
+.DS_Store
+Thumbs.db
