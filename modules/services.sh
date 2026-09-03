@@ -1,176 +1,145 @@
 #!/bin/bash
 
-
 service_manager() {
 
-	while true
-	do
+    while true
+    do
 
-		clear
+        clear
 
-		echo "===================================="
-        	echo "          SERVICE MANAGER"
-        	echo "===================================="
-        	echo
+        echo "===================================="
+        echo "          SERVICE MANAGER"
+        echo "===================================="
+        echo
 
-        	echo "1. List Running Services"
-        	echo "2. Service Status"
-        	echo "3. Start Service"
-        	echo "4. Stop Service"
-        	echo "5. Restart Service"
-        	echo "6. Enable Service"
-        	echo "7. Disable Service"
-        	echo "0. Back"
-        	echo
+        echo "1. List Running Services"
+        echo "2. Service Status"
+        echo "3. Start Service"
+        echo "4. Stop Service"
+        echo "5. Restart Service"
+        echo "6. Enable Service"
+        echo "7. Disable Service"
+        echo "0. Back"
+        echo
 
-		read -p "Choose an Option : " service_choice
+        read -p "Choose an Option : " service_choice
+        echo
 
-		case "$service_choice" in
+        case $service_choice in
 
-			1)
-				systemctl list-units --type=service --state=running --no-pager
-				read -p "Press Enter to Continue ..."
-				;;
+            1)
+                echo "Running Services"
+                echo
 
-			2)
-				read -p "Enter the Service Name :" service_name
-				echo
-				systemctl status "$service_name" --no-pager
-				read -p "Press Enter to Continue ..."
-				;;
+                systemctl list-units --type=service --state=running --no-pager
 
-			3)
-    				read -p "Enter the Service Name :" service_name
+                read -p "Press Enter to Continue ...."
+                ;;
 
-    				if [[ "$service_name" != *.service ]]
-    				then
-        				service_name="${service_name}.service"
-    				fi
+            2)
+                read -p "Enter the Service Name : " service
 
-    					sudo systemctl start "$service_name"
+                echo
+                systemctl status "$service" --no-pager
 
-    				if systemctl is-active --quiet "$service_name"
-    				then
-        				echo
-        				echo "Service '$service_name' started successfully."
-    				else
-        				echo
-        				echo "Failed to start service '$service_name'."
-    				fi
+                read -p "Press Enter to Continue ...."
+                ;;
 
-    				read -p "Press Enter to Continue ..."
-    				;;
+            3)
+                read -p "Enter the Service Name : " service
 
-			4)
-				 read -p "Enter the Service Name :" service_name
+                echo
 
-    				 if [[ "$service_name" != *.service ]]
-    				 then
-        				service_name="${service_name}.service"
-    				 fi
+                if sudo systemctl start "$service"
+                then
+                    echo
+                    echo "Service '$service' started successfully."
+                else
+                    echo
+                    echo "Failed to start service '$service'."
+                fi
 
-    				 if systemctl is-active --quiet "$service_name"
-    				 then
-        				sudo systemctl stop "$service_name"
+                read -p "Press Enter to Continue ...."
+                ;;
 
-        				if systemctl is-active --quiet "$service_name"
-        			 	then
-            					echo
-            					echo "Failed to stop service '$service_name'."
-        			 else
-            					echo
-            					echo "Service '$service_name' stopped successfully."
-        			 fi
-    				 else
-        					echo
-        					echo "Service '$service_name' is not currently running."
-    				 fi
+            4)
+                read -p "Enter the Service Name : " service
 
-    				 read -p "Press Enter to Continue ..."
-    				 ;;
+                echo
 
-			5)
-    				 read -p "Enter the Service Name :" service_name
+                if sudo systemctl stop "$service"
+                then
+                    echo
+                    echo "Service '$service' stopped successfully."
+                else
+                    echo
+                    echo "Failed to stop service '$service'."
+                fi
 
-    				 if [[ "$service_name" != *.service ]]
-    				 then
-        				service_name="${service_name}.service"
-    				 fi
+                read -p "Press Enter to Continue ...."
+                ;;
 
-    				 if systemctl is-active --quiet "$service_name"
-    				 then
-        				sudo systemctl restart "$service_name"
+            5)
+                read -p "Enter the Service Name : " service
 
-        				if systemctl is-active --quiet "$service_name"
-        				then
-            					echo
-            					echo "Service '$service_name' restarted successfully."
-        				else
-            					echo
-            					echo "Failed to restart service '$service_name'."
-        				fi
-    				 else
-        					echo
-       	 					echo "Service '$service_name' is not currently running."
-    				 fi
+                echo
 
-    				 read -p "Press Enter to Continue ..."
-    				 ;;
+                if sudo systemctl restart "$service"
+                then
+                    echo
+                    echo "Service '$service' restarted successfully."
+                else
+                    echo
+                    echo "Failed to restart service '$service'."
+                fi
 
-			6)
-				read -p "Enter the Service Name :" service_name
+                read -p "Press Enter to Continue ...."
+                ;;
 
-    				if [[ "$service_name" != *.service ]]
-    				then
-        				service_name="${service_name}.service"
-    				fi
+            6)
+                read -p "Enter the Service Name : " service
 
-    					sudo systemctl enable "$service_name"
+                echo
 
-    				if systemctl is-enabled --quiet "$service_name"
-    				then
-        				echo
-        				echo "Service '$service_name' enabled successfully."
-    				else
-        				echo
-        				echo "Failed to enable service '$service_name'."
-    				fi
+                if sudo systemctl enable "$service"
+                then
+                    echo
+                    echo "Service '$service' enabled successfully."
+                else
+                    echo
+                    echo "Failed to enable service '$service'."
+                fi
 
-    				read -p "Press Enter to Continue ..."
-    				;;
+                read -p "Press Enter to Continue ...."
+                ;;
 
+            7)
+                read -p "Enter the Service Name : " service
 
-			7)
-    				read -p "Enter the Service Name :" service_name
+                echo
 
-    				if [[ "$service_name" != *.service ]]
-    				then
-        				service_name="${service_name}.service"
-    				fi
+                if sudo systemctl disable "$service"
+                then
+                    echo
+                    echo "Service '$service' disabled successfully."
+                else
+                    echo
+                    echo "Failed to disable service '$service'."
+                fi
 
-    				sudo systemctl disable "$service_name"
+                read -p "Press Enter to Continue ...."
+                ;;
 
-    				if systemctl is-enabled --quiet "$service_name"
-    				then
-        				echo
-        				echo "Failed to disable service '$service_name'."
-    				else
-        				echo
-        				echo "Service '$service_name' disabled successfully."
-    				fi
+            0)
+                break
+                ;;
 
-    				read -p "Press Enter to Continue ..."
-    				;;
+            *)
+                echo "Invalid Option. Please Try Again."
+                read -p "Press Enter to Continue ...."
+                ;;
 
+        esac
 
-			0)
-				return
-				;;
-
-			*)
-				echo "Invalid Option"
-				read -p "Press Enter to Continue..."
-				;;
-			esac
-		done
+    done
 }

@@ -4,7 +4,7 @@ source modules/system.sh
 source modules/cpu.sh
 source modules/memory.sh
 source modules/disk.sh
-
+source modules/network.sh
 source modules/services.sh
 source modules/logs.sh
 source modules/process.sh
@@ -78,7 +78,7 @@ case $choice in
 	read -p "Press enter to continue ...."
 	;;
 7)
-	echo "7. Opening Network Tools..."
+	network_tools
 	read -p "Press enter to continue ...."
 	;;
 8)
