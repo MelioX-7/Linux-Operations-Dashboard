@@ -8,6 +8,7 @@ source modules/network.sh
 source modules/services.sh
 source modules/logs.sh
 source modules/process.sh
+source modules/backup.sh
 
 
 while true
@@ -86,7 +87,7 @@ case $choice in
 	read -p "Press enter to continue ...."
 	;;
 9)
-	echo "9. Opening Backup Utility..."
+	backup_utility
 	read -p "Press enter to continue ...."
 	;;
 10)
