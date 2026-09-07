@@ -9,7 +9,7 @@ source modules/services.sh
 source modules/logs.sh
 source modules/process.sh
 source modules/backup.sh
-
+source modules/users.sh
 
 while true
 do
@@ -91,7 +91,7 @@ case $choice in
 	read -p "Press enter to continue ...."
 	;;
 10)
-	echo "10. Opening User Management..."
+	user_management
 	read -p "Press enter to continue ...."
 	;;
 11)
