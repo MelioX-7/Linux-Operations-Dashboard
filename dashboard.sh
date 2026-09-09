@@ -10,6 +10,9 @@ source modules/logs.sh
 source modules/process.sh
 source modules/backup.sh
 source modules/users.sh
+source modules/report.sh
+
+
 
 while true
 do
@@ -95,7 +98,7 @@ case $choice in
 	read -p "Press enter to continue ...."
 	;;
 11)
-	echo "11. Opening Generate Report..."
+	generate_report
 	read -p "Press enter to continue ...."
 	;;
 0)
