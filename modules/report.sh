@@ -18,10 +18,6 @@ generate_report() {
 
     echo >> "$report_file"
 
-    echo "Kernel: $(uname -r)" >> "$report_file"
-
-    echo >> "$report_file"
-
     echo "CPU INFORMATION" >> "$report_file"
     echo "------------------------------------" >> "$report_file"
     echo "CPU Cores: $(nproc)" >> "$report_file"
@@ -31,9 +27,19 @@ generate_report() {
     echo >> "$report_file"
 
 
+    echo "MEMORY INFORMATION" >> "$report_file"
+    echo "------------------------------------" >> "$report_file"
+    echo "Total Memory: $(free -h | awk '/Mem:/ {print $2}')" >> "$report_file"
+    echo "Used Memory: $(free -h | awk '/Mem:/ {print $3}')" >> "$report_file"
+    echo "Free Memory: $(free -h | awk '/Mem:/ {print $4}')" >> "$report_file"
+    echo "Available Memory: $(free -h | awk '/Mem:/ {print $7}')" >> "$report_file"
+
+    echo >> "$report_file"
+
 
 
     echo "Report saved to: $report_file"
 
 
 }
+
