@@ -77,6 +77,16 @@ generate_report() {
     echo >> "$report_file"
 
 
+
+    echo "LOGGED-IN USERS" >> "$report_file"
+    echo "------------------------------------" >> "$report_file"
+
+    who >> "$report_file"
+
+    echo >> "$report_file"
+
+
+
     echo "Report saved to: $report_file"
 
 
