@@ -12,6 +12,7 @@ logs_viewer() {
     echo "3. Warning Logs"
     echo "4. Search Logs"
     echo "5. Follow Logs"
+    echo "6. Dashboard Logs"
     echo "0. Back"
     echo
 
@@ -41,6 +42,9 @@ logs_viewer() {
             journalctl -f
             ;;
 
+	6)
+	    tail -n 10 logs/dashboard.log
+	    ;;
         0)
             return
             ;;
