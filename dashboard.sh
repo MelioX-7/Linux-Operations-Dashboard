@@ -116,6 +116,7 @@ case $choice in
 11)
 	log_message "INFO" "Report Generation selected"
 	generate_report
+	report_management
 	read -p "Press enter to continue ...."
 	;;
 0)

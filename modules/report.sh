@@ -92,3 +92,135 @@ generate_report() {
 
 
 }
+
+report_management() {
+
+    echo "===================================="
+    echo "              REPORTS"
+    echo "===================================="
+    echo
+
+    read -p "Do you want to generate a new report? (y/n): " choice
+
+    case "$choice" in
+
+        y|Y)
+            generate_report
+            ;;
+
+        n|N)
+            echo
+            echo "1. List Reports"
+            echo "2. View Report"
+            echo "3. Delete Report"
+            echo "0. Back"
+            echo
+
+            read -p "Choose an option: " report_choice
+
+            case "$report_choice" in
+
+                1)
+                    ls -lh reports/*.txt
+                    ;;
+
+                2)
+    		    echo "Available Reports:"
+    		    echo
+
+    		    reports=(reports/*.txt)
+
+    		    if [ ! -e "${reports[0]}" ]; then
+        	  	echo "No reports found."
+       			return
+    		    fi
+
+    		    for i in "${!reports[@]}"; do
+        		echo "$((i + 1)). $(basename "${reports[$i]}")"
+    		    done
+
+    		    echo
+    		    read -p "Enter report number: " report_number
+
+    		    if [[ "$report_number" =~ ^[0-9]+$ ]] &&
+       		    	[ "$report_number" -ge 1 ] &&
+       		    	[ "$report_number" -le "${#reports[@]}" ]; then
+
+        	    	selected_report="${reports[$((report_number - 1))]}"
+
+        	    	echo
+        	    	cat "$selected_report"
+
+    		    else
+        		echo "Invalid report number."
+    		    fi
+    		    ;;
+
+                3)
+    			echo "Available Reports:"
+    			echo
+
+    			reports=(reports/*.txt)
+
+    			if [ ! -e "${reports[0]}" ]; then
+        			echo "No reports found."
+        			return
+    			fi
+
+    			for i in "${!reports[@]}"; do
+        			echo "$((i + 1)). $(basename "${reports[$i]}")"
+    			done
+
+    			echo
+    			read -p "Enter report number to delete: " report_number
+
+    			if [[ "$report_number" =~ ^[0-9]+$ ]] &&
+       			   [ "$report_number" -ge 1 ] &&
+       			   [ "$report_number" -le "${#reports[@]}" ]; then
+
+        		   selected_report="${reports[$((report_number - 1))]}"
+
+        		   echo
+        		   echo "Selected: $(basename "$selected_report")"
+
+        		   read -p "Are you sure you want to delete this report? (y/n): " confirm
+
+        		   case "$confirm" in
+
+            			y|Y)
+                			rm "$selected_report"
+                			echo "Report deleted successfully."
+                			;;
+
+            			n|N)
+                			echo "Deletion cancelled."
+                			;;
+
+            			*)
+                			echo "Invalid choice. Deletion cancelled."
+                			;;
+
+        		    esac
+
+    			else
+        			echo "Invalid report number."
+    			fi
+    			;;
+
+                	0)
+                   		 return
+                    		 ;;
+
+                *)
+                    echo "Invalid option."
+                    ;;
+
+            esac
+            ;;
+
+        *)
+            echo "Invalid option."
+            ;;
+
+    esac
+}
