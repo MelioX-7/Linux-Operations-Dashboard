@@ -63,6 +63,20 @@ generate_report() {
 
 
 
+    echo "SERVICES INFORMATION" >> "$report_file"
+    echo "------------------------------------" >> "$report_file"
+
+    echo "Running Services:" >> "$report_file"
+    systemctl list-units --type=service --state=running --no-pager >> "$report_file"
+
+    echo >> "$report_file"
+
+    echo "Failed Services:" >> "$report_file"
+    systemctl --failed --no-pager >> "$report_file"
+
+    echo >> "$report_file"
+
+
     echo "Report saved to: $report_file"
 
 
