@@ -41,5 +41,30 @@ generate_report() {
 
     echo >> "$report_file"
 
+
+
+    echo "NETWORK INFORMATION" >> "$report_file"
+    echo "------------------------------------" >> "$report_file"
+
+    echo "Network Interfaces:" >> "$report_file"
+    ip -br link >> "$report_file"
+
+    echo >> "$report_file"
+
+    echo "IP Addresses:" >> "$report_file"
+    ip -br addr >> "$report_file"
+
+    echo >> "$report_file"
+
+    echo "Routing Table:" >> "$report_file"
+    ip route >> "$report_file"
+
+    echo >> "$report_file"
+
+
+
     echo "Report saved to: $report_file"
+
+
+
 }
